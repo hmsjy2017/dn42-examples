@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  bird-lg:
+    image: xddxdd/bird-lg-go
+    container_name: bird-lg
+    restart: always
+    network_mode: host 
+    environment:
+      - BIRDLG_SERVERS=hk1,sg1,uk1,nl1 # 节点列表，以逗号分隔
+      - BIRDLG_DOMAIN=vm.libecho.top # 节点 endpiont 后缀
+      - BIRDLG_TITLE_BRAND=Looking Glass # 标签栏上显示的名称
+      - BIRDLG_NAVBAR_BRAND=Looking Glass # 页面上显示的名称
+      - BIRDLG_WHOIS=whois.lantian.dn42 # Whois 服务器地址
+      - BIRDLG_DNS_INTERFACE=asn.dn42
+#因使用 host 网络模式，此处禁用
+#    ports:
+#      - '5000:5000'
+  bird-lgproxy:
+    image: xddxdd/bird-lgproxy-go
+    container_name: bird-lgproxy
+    restart: always
+    volumes:
+      - '/var/run/bird/bird.ctl:/var/run/bird/bird.ctl'
+    ports:
+      - '8000:8000'

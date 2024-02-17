@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  bird-lgproxy:
+    image: xddxdd/bird-lgproxy-go
+    container_name: bird-lgproxy
+    restart: always
+    volumes:
+      - '/var/run/bird/bird.ctl:/var/run/bird/bird.ctl'
+    ports:
+      - '8000:8000'
